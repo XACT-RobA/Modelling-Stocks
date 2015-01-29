@@ -39,7 +39,7 @@ for i in range(data_length):
         ha_open = round(((prev_ha_open+prev_ha_close)/2), 5)
         ha_close = round(((j_open+j_high+j_low+j_close)/4), 5)
         ha_high = max([j_high, ha_open, ha_close])
-        ha_low = min([j_high, ha_open, ha_close])
+        ha_low = min([j_low, ha_open, ha_close])
     
     this_ha_candle = [j_time, ha_open, ha_high, ha_low, ha_close]
     ha_data[i] = this_ha_candle
