@@ -5,16 +5,20 @@ filelocation = '../data/jcandles.csv';
 jc_file = fopen(filelocation, 'r');
 j_candles = textscan(jc_file, '%d:%d %f %f %f %f', 'delimiter', ',', 'CollectOutput', 1);
 fclose(jc_file);
-j_time = j_candles(1){1};
-j_data = j_candles(2){1};
+j_time_temp = j_candles(1);
+j_data_temp = j_candles(2);
+j_time = j_time_temp{1};
+j_data = j_data_temp{1};
 
 % To read in the Heikin Ashi candle data
-filelocation = '../data/hacandles.csv';
-hac_file = fopen(filelocation, 'r');
-ha_candles = textscan(hac_file, '%s %f %f %f %f', 'delimiter', ',', 'CollectOutput', 1);
-fclose(hac_file);
-ha_time = ha_candles(1){1};
-ha_data = ha_candles(2){1};
+%filelocation = '../data/hacandles.csv';
+%hac_file = fopen(filelocation, 'r');
+%ha_candles = textscan(hac_file, '%s %f %f %f %f', 'delimiter', ',', 'CollectOutput', 1);
+%fclose(hac_file);
+%ha_time_temp(1);
+%ha_data_temp(2);
+%ha_time = ha_time_temp{1};
+%ha_data = ha_data_temp{1};
 
 
 j_shadow_size = j_data(:,2)-j_data(:,3);
@@ -34,3 +38,5 @@ j_shadow_body_ratio = j_abs_body_size./j_shadow_size;
 j_av_shadow_body_ratio = mean(j_shadow_body_ratio)
 j_qu_shadow_body_ratio = quantile(j_shadow_body_ratio)
 
+
+j_abs_body_size(500)
