@@ -25,18 +25,18 @@ j_shadow_size = j_data(:,2)-j_data(:,3);
 j_max_shadow_size = max(j_shadow_size);
 j_min_shadow_size = min(j_shadow_size);
 j_av_shadow_size = mean(j_shadow_size)
-j_qu_shadow_size = quantile(j_shadow_size)
+j_qu_shadow_size = quantile(j_shadow_size,5)
 
 j_body_size = j_data(:,1)-j_data(:,4);
 j_abs_body_size = abs(j_body_size);
 j_max_body_size = max(j_abs_body_size);
 j_av_body_size = mean(j_body_size)
-j_qu_abs_body_size = quantile(j_abs_body_size)
+j_qu_abs_body_size = quantile(j_abs_body_size,5)
 
 j_gain = j_body_size>=0;
 j_shadow_body_ratio = j_abs_body_size./j_shadow_size;
 j_av_shadow_body_ratio = mean(j_shadow_body_ratio)
-j_qu_shadow_body_ratio = quantile(j_shadow_body_ratio)
+j_qu_shadow_body_ratio = quantile(j_shadow_body_ratio,5)
 
 
 j_abs_body_size(500)
