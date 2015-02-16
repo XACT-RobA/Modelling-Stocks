@@ -26,3 +26,9 @@ def sim_trade(data, trade_array):
     else:
         print('Error: Data and trade array are different lengths')
         return [0, 0]
+    
+def save_trade_array(trade_array, filepath):
+    with open(filepath, 'wb') as trade_file:
+        for trade_value in trade_array:
+            trade_file.write(str(trade_value) + '\n')
+        print('Trade array saved')

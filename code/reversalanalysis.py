@@ -34,6 +34,8 @@ for i in range(data_length):
             trade_array[i] = last_trade + 1
             last_trade = (last_trade + 1) % 2
             
+tradesim.save_trade_array(trade_array, '../data/tradedata/allreversals.csv')
+            
 [profit, profit_array] = tradesim.sim_trade(data, trade_array)
 percent_profit = (profit - 1) * 100
 print('Buying and selling every reversal')
@@ -63,6 +65,8 @@ for i in range(data_length):
                 #Sell
                 trade_array[i] = 2
                 last_trade = 0
+                
+tradesim.save_trade_array(trade_array, '../data/tradedata/dojireversals.csv')
                 
 [profit, profit_array] = tradesim.sim_trade(data, trade_array)
 percent_profit = (profit - 1) * 100
