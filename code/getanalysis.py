@@ -1,4 +1,5 @@
 import csv
+import numpy
 
 def import_j_candles(filepath):
     # Open & read the csv file
@@ -72,3 +73,25 @@ def analyse(data):
     [increase_data, body_sizes, shadow_sizes, data_length] = body_and_shadow(data)
     [run_length_data, reversals] = runs_and_reversal(data, data_length, increase_data)
     return ([increase_data, body_sizes, shadow_sizes, data_length, run_length_data, reversals])
+
+def size_analysis(sizes):
+    av_size = numpy.mean(sizes)
+    min_size = min(sizes)
+    lower_qu_size = numpy.percentile(sizes, 25)
+    median_size = numpy.percentile(sizes, 50)
+    upper_qu_size = numpy.percentile(sizes, 75)
+    max_size = max(sizes)
+    return([av_size,[min_size, lower_qu_size, median_size, upper_qu_size, max_size]])
+
+def body_size_analysis(body_sizes):
+    return size_analysis(body_sizes)
+    
+def shadow_size_analysis(shadow_sizes):
+    return size_analysis(shadow_sizes)
+    
+def body_shadow_ratio_analysis(body_sizes, shadow_sizes):
+    body_shadow_ratios = [0]*len(body_sizes)
+    for i in range(len(body_sizes)):
+        body_shadow_ratios[i] += (body_sizes[i]/shadow_sizes[i])
+    return size_analysis(body_shadow_ratios)
+    
