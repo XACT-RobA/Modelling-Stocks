@@ -1,7 +1,7 @@
 format long;
 
 % To read in the Japanese candle data
-filelocation = 'C:\Users\JButl_000\Documents\MATLAB\jcandless.csv';
+filelocation = '../data/jcandles.csv';
 jc_file = fopen(filelocation, 'r');
 j_candles = textscan(jc_file, '%d:%d %f %f %f %f', 'delimiter', ',', 'CollectOutput', 1);
 fclose(jc_file);
