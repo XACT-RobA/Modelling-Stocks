@@ -1,7 +1,7 @@
 import csv
 
 # Open and read the csv file
-with open('../data/jcandles.csv', 'rb') as jcandle_file:
+with open('../../data/jcandles.csv', 'rb') as jcandle_file:
     data = []
     jcandle_data = csv.reader(jcandle_file, delimiter=',')
     for row in jcandle_data:
@@ -44,7 +44,7 @@ for i in range(data_length):
     this_ha_candle = [j_time, ha_open, ha_high, ha_low, ha_close]
     ha_data[i] = this_ha_candle
     
-with open('../data/hacandles.csv', 'wb') as hacandle_file:
+with open('../../data/hacandles.csv', 'wb') as hacandle_file:
     ha_writer = csv.writer(hacandle_file, delimiter=',')
     for ha_candle in ha_data:
         ha_writer.writerow(ha_candle)

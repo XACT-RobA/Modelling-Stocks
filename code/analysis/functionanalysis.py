@@ -1,8 +1,11 @@
+import sys
+sys.path.append('../tools')
+
 import getanalysis
 import tradesim
 import csv
 
-filepath = '../data/jcandles.csv'
+filepath = '../../data/jcandles.csv'
 
 data = getanalysis.import_j_candles(filepath)
 
@@ -51,7 +54,7 @@ with open('../data/run_function_data.csv', 'wb') as run_data_file:
         if increase_data[i] == 1:
             run_function_data[i] = [i, prev_run_length, prev_run_diff, next_run_length, next_run_diff]
 
-with open('../data/gain_function_data.csv', 'wb') as run_data_file:
+with open('../../data/gain_function_data.csv', 'wb') as run_data_file:
     run_data_writer = csv.writer(run_data_file, delimiter=',')
     for run_data in run_function_data:
         try:

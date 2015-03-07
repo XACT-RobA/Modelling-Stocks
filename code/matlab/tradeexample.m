@@ -1,7 +1,7 @@
 format long
 
 % Read in japanese candle data
-filelocation = '../data/jcandles.csv';
+filelocation = '../../data/jcandles.csv';
 jc_file = fopen(filelocation, 'r');
 j_candles = textscan(jc_file, '%d:%d %f %f %f %f', 'delimiter', ',', 'CollectOutput', 1);
 fclose(jc_file);
@@ -9,7 +9,7 @@ data_temp = j_candles(2);
 data = data_temp{1};
 
 % Read in trade data csv
-trade_filelocation = '../data/tradedata/dojireversals.csv';
+trade_filelocation = '../../data/tradedata/dojireversals.csv';
 trade_file = fopen(trade_filelocation, 'r');
 trade_file_data = textscan(trade_file, '%d8');
 fclose(trade_file);

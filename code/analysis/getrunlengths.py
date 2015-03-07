@@ -1,6 +1,6 @@
 import csv
 
-with open('../data/jcandles.csv', 'rb') as jcandle_file:
+with open('../../data/jcandles.csv', 'rb') as jcandle_file:
     data = []
     jcandle_data = csv.reader(jcandle_file, delimiter=',')
     for row in jcandle_data:
@@ -41,15 +41,15 @@ for i in range(len(total_run_lengths)):
     this_run_length = total_run_lengths[i]
     run_length_count[this_run_length] += 1
 
-with open('../data/runlengths/allrunlengths.csv', 'wb') as allrunlengths_file:
+with open('../../data/runlengths/allrunlengths.csv', 'wb') as allrunlengths_file:
     for i in range(len(run_length_data)):
         allrunlengths_file.write(str(run_length_data[i]) + ',' + str(increase_bin[i]) +  '\n')
 
-with open('../data/runlengths/totalrunlengths.csv', 'wb') as totalrunlengths_file:
+with open('../../data/runlengths/totalrunlengths.csv', 'wb') as totalrunlengths_file:
     for run_length in total_run_lengths:
         totalrunlengths_file.write(str(run_length) + '\n')
 
-with open('../data/runlengths/runlengthscount.csv', 'wb') as runlengthscount_file:
+with open('../../data/runlengths/runlengthscount.csv', 'wb') as runlengthscount_file:
     for i in range(len(run_length_count)):
         runlengthscount_file.write(str(run_length_count[i]) + ' runs of length ' + str(i) + '\n')
 

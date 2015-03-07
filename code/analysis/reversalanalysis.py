@@ -1,8 +1,11 @@
+import sys
+sys.path.append('../tools')
+
 import getanalysis
 import tradesim
 
 # Import japanese candle data
-data = getanalysis.import_j_candles('../data/jcandles.csv')
+data = getanalysis.import_j_candles('../../data/jcandles.csv')
 
 # Get all sorts of data
 [increase_data, body_sizes, shadow_sizes, data_length, run_length_data, reversals] = getanalysis.analyse(data)
@@ -34,7 +37,7 @@ for i in range(data_length):
             trade_array[i] = last_trade + 1
             last_trade = (last_trade + 1) % 2
             
-tradesim.save_trade_array(trade_array, '../data/tradedata/allreversals.csv')
+tradesim.save_trade_array(trade_array, '../../data/tradedata/allreversals.csv')
             
 [profit, profit_array] = tradesim.sim_trade(data, trade_array)
 percent_profit = (profit - 1) * 100
@@ -66,7 +69,7 @@ for i in range(data_length):
                 trade_array[i] = 2
                 last_trade = 0
                 
-tradesim.save_trade_array(trade_array, '../data/tradedata/dojireversals.csv')
+tradesim.save_trade_array(trade_array, '../../data/tradedata/dojireversals.csv')
                 
 [profit, profit_array] = tradesim.sim_trade(data, trade_array)
 percent_profit = (profit - 1) * 100

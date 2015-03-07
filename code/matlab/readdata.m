@@ -6,7 +6,7 @@ format long;
 %% Japanese candles
 
 % To read in the Japanese candle data
-filelocation = '../data/jcandles.csv';
+filelocation = '../../data/jcandles.csv';
 jc_file = fopen(filelocation, 'r');
 j_candles = textscan(jc_file, '%d:%d %f %f %f %f', 'delimiter', ',', 'CollectOutput', 1);
 fclose(jc_file);
@@ -17,7 +17,7 @@ j_data = j_candles(2){1};
 %% Heikin Ashi candles
 
 % To read in the Heikin Ashi candle data
-filelocation = '../data/hacandles.csv';
+filelocation = '../../data/hacandles.csv';
 hac_file = fopen(filelocation, 'r');
 ha_candles = textscan(hac_file, '%s %f %f %f %f', 'delimiter', ',', 'CollectOutput', 1);
 fclose(hac_file);
