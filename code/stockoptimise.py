@@ -4,7 +4,7 @@ sys.path.append('./tools')
 import getanalysis
 import tradesim
 import csv
-
+import time
 import numpy
 
 data_filepath = '../data/jcandles.csv'
@@ -96,7 +96,7 @@ def get_profit(datadata, datalimits):
     [profit, profit_array] = tradesim.sim_trade(data,trade_array)
     return(profit)
 
-
+starttime = time.time()
 
 n_iter = 10
 
@@ -125,9 +125,10 @@ profit_array = []
 profit_stuff_array = []
 
 for body_i in range(n_iter):
-    print(str(body_i*10) + '%')
+    #print(str(body_i*10) + '%')
     #body_lim = body_array[body_i]
     for shadow_i in range(n_iter):
+        print(str((body_i*10)+shadow_i) + '%')
         #shadow_lim = shadow_array[shadow_i]
         for ratio_i in range(n_iter):
             #ratio_lim = ratio_array[ratio_i]
@@ -147,5 +148,10 @@ for body_i in range(n_iter):
                             profit_array.append(this_profit)
                             profit_stuff_array.append([datalimits])
 print('100%')
+
+endtime = time.time()
+
+timetaken = endtime-starttime
+print(str(timetaken) + 's')
 
 print(max(profit_array))
