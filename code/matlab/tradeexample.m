@@ -20,5 +20,5 @@ trade_array = trade_file_data{1};
 
 % Display percentage profit
 disp('Buying at doji reversals')
-percentage_profit = (profit-1)/100
+percentage_profit = (profit-1)*100
 max_profit = (max(profit_array)-1)/100
