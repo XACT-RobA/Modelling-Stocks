@@ -44,7 +44,7 @@ def body_and_shadow(data):
         if this_increase:
             increase_data[i] += 1
         # Calculate shadow size
-        this_shadow_size = c_high-c_close
+        this_shadow_size = c_high-c_low
         shadow_sizes[i] += this_shadow_size
     return ([increase_data, body_sizes, shadow_sizes, data_length])
 
@@ -94,4 +94,37 @@ def body_shadow_ratio_analysis(body_sizes, shadow_sizes):
     for i in range(len(body_sizes)):
         body_shadow_ratios[i] += (body_sizes[i]/shadow_sizes[i])
     return size_analysis(body_shadow_ratios)
+
+def run_analysis(body_sizes, data_length, run_length_data, increase_data):
+    run_diff_array = [None]*data_length
+    current_run_diff = 0
+    current_increase_value = 2
+    prev_run_length = 0
+    prev_run_diff = 0
+    run_length_iter = 0
+    run_diff_iter = 0
+    for i in range(data_length):
+        if current_increase_value <> increase_data[i]:
+            for j in range(max(run_length_data)):
+                if (i+j) < data_length:
+                    if increase_data[i+j] <> increase_data[i]:
+                        # End of run
+                        next_run_length = run_length_iter
+                        next_run_diff = run_diff_iter
+                        run_length_iter = 0
+                        run_diff_iter = 0
+                        break
+                    run_length_iter += 1
+                    run_diff_iter += body_sizes[i+j]
+                else:
+                    next_run_length = 0
+                    next_run_diff = 0
+            run_diff_array[i] = [i, prev_run_length, prev_run_diff, next_run_length, next_run_diff]
+            prev_run_length = 0
+            prev_run_diff = 0
+            current_increase_value = increase_data[i]
+        prev_run_length += 1
+        prev_run_diff += body_sizes[i]
+    return run_diff_array
+        
     
