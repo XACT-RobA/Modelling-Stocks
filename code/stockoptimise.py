@@ -98,7 +98,7 @@ def get_profit(datadata, datalimits):
 
 starttime = time.time()
 
-n_iter = 10
+n_iter = 5
 
 body_array = [0] * n_iter
 shadow_array = [0] * n_iter
@@ -109,7 +109,7 @@ next_run_array = [0] * n_iter
 next_diff_array = [0] * n_iter
 
 for i in range(n_iter):
-    p = ((i+1)*10)
+    p = ((i+1)*(100/n_iter))
     body_array[i] += numpy.percentile(body_sizes, p)
     shadow_array[i] += numpy.percentile(shadow_sizes, p)
     ratio_array[i] += numpy.percentile(body_shadow_ratios, p)
@@ -124,29 +124,34 @@ datadata = [data, data_length, body_sizes, shadow_sizes, body_shadow_ratios,
 profit_array = []
 profit_stuff_array = []
 
+j = 0
+
 for body_i in range(n_iter):
-    #print(str(body_i*10) + '%')
-    #body_lim = body_array[body_i]
+    body_lim = body_array[body_i]
     for shadow_i in range(n_iter):
-        print(str((body_i*10)+shadow_i) + '%')
-        #shadow_lim = shadow_array[shadow_i]
+        currenttime = time.time()-starttime
+        print(str((body_i*(100.0/n_iter))+(shadow_i*(100.0/(n_iter**2)))) + '% - ' + str(j) + ' - ' + str(currenttime) + 's')
+        shadow_lim = shadow_array[shadow_i]
         for ratio_i in range(n_iter):
-            #ratio_lim = ratio_array[ratio_i]
+            ratio_lim = ratio_array[ratio_i]
             for prev_run_i in range(n_iter):
-                #prev_run_lim = prev_run_array[prev_run_i]
+                prev_run_lim = prev_run_array[prev_run_i]
                 for prev_diff_i in range(n_iter):
-                    #prev_diff_lim = prev_diff_array[prev_diff_i]
+                    prev_diff_lim = prev_diff_array[prev_diff_i]
                     for next_run_i in range(n_iter):
-                        #next_run_lim = next_run_array[next_run_i]
+                        next_run_lim = next_run_array[next_run_i]
                         for next_diff_i in range(n_iter):
-                            #next_diff_lim = next_diff_array[next_diff_i]
-                            datalimits = [body_array[body_i], shadow_array[shadow_i],
-                                          ratio_array[ratio_i], prev_run_array[prev_run_i],
-                                          prev_diff_array[prev_diff_i], next_run_array[next_run_i],
-                                          next_diff_array[next_diff_i]]
+                            next_diff_lim = next_diff_array[next_diff_i]
+                            datalimits = [body_lim, shadow_lim,
+                                          ratio_lim, prev_run_lim,
+                                          prev_diff_lim, next_run_lim,
+                                          next_diff_lim]
                             this_profit =  get_profit(datadata, datalimits)
                             profit_array.append(this_profit)
-                            profit_stuff_array.append([datalimits])
+                            profit_stuff_array.append([body_i, shadow_i, ratio_i,
+                                                       prev_run_i, prev_diff_i,
+                                                       next_run_i, next_diff_i])
+                            j += 1
 print('100%')
 
 endtime = time.time()
@@ -154,4 +159,13 @@ endtime = time.time()
 timetaken = endtime-starttime
 print(str(timetaken) + 's')
 
-print(max(profit_array))
+max_profit = max(profit_array)
+print(str((max_profit-1)*100.0) + '% profit')
+max_profit_data = profit_stuff_array[profit_array.index(max(profit_array))]
+print('Body size less than ' + str(body_array[max_profit_data[0]]))
+print('Shadow size less than ' + str(body_array[max_profit_data[1]]))
+print('Body to shadow ratio less than ' + str(body_array[max_profit_data[2]]))
+print('Previous run length greater than ' + str(body_array[max_profit_data[3]]))
+print('Previous run difference greater than ' + str(body_array[max_profit_data[4]]))
+print('Next run length greater than ' + str(body_array[max_profit_data[5]]))
+print('Next run difference greater than ' + str(body_array[max_profit_data[6]]))
