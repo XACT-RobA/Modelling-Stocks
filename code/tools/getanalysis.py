@@ -127,4 +127,12 @@ def run_analysis(body_sizes, data_length, run_length_data, increase_data):
         prev_run_diff += body_sizes[i]
     return run_diff_array
         
-    
+# Function to get all 10th percentiles of data
+def getpercentiles(data):
+    this_percentiles = ([numpy.percentile(data, 0),
+        numpy.percentile(data,10), numpy.percentile(data,20),
+        numpy.percentile(data,30), numpy.percentile(data,40),
+        numpy.percentile(data,50), numpy.percentile(data,60),
+        numpy.percentile(data,70), numpy.percentile(data,80),
+        numpy.percentile(data,90), numpy.percentile(data,100)])
+    return this_percentiles
