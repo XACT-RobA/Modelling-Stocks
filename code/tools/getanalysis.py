@@ -132,12 +132,4 @@ def getpercentiles(data, n):
     this_percentiles = []
     for i in range(n+1):
         this_percentiles.append(numpy.percentile(data, i*(100/n)))
-    '''
-    this_percentiles = ([numpy.percentile(data, 0),
-        numpy.percentile(data,10), numpy.percentile(data,20),
-        numpy.percentile(data,30), numpy.percentile(data,40),
-        numpy.percentile(data,50), numpy.percentile(data,60),
-        numpy.percentile(data,70), numpy.percentile(data,80),
-        numpy.percentile(data,90), numpy.percentile(data,100)])
-    '''
     return this_percentiles

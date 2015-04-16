@@ -19,7 +19,7 @@ def sim_trade(data, trade_array):
                 # Check not already sold
                 if last_trade == 1:
                     sell_price = data[i][3]
-                    value = value * (sell_price / buy_price)
+                    value = ((((value * (sell_price / buy_price))-1)/1)+1)
                     profit_array[i] += value
                     last_trade = 0
         #return [value, profit_array]

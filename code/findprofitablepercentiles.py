@@ -109,6 +109,12 @@ def gettradedata(all_cents, coefficient_data, candle_data, reversal_data,
 		shadow_sizes_cents)
 	this_prev_av_body_shadow_ratio_cent = getcents(float(
 		this_prev_av_body_shadow_ratio), body_shadow_ratios_cents)
+	combined_cents = ([this_body_size_cent, this_shadow_size_cent,
+		this_body_shadow_ratio_cent, this_imm_prev_body_size_cent,
+		this_imm_prev_shadow_size_cent, this_imm_prev_body_shadow_ratio_cent,
+		this_prev_run_length_cent, this_prev_run_diff_cent,
+		this_prev_av_body_size_cent, this_prev_av_shadow_size_cent,
+		this_prev_av_body_shadow_ratio_cent])
 	# Blank list of trade instructions, 1 for buy, 2 for sell
 	trade_data = [0]*len(candle_data)
 	for k in range(len(coefficient_data)):
@@ -142,7 +148,7 @@ def gettradedata(all_cents, coefficient_data, candle_data, reversal_data,
 			(float(this_prev_av_body_shadow_ratio) >= body_shadow_ratios_cents[this_prev_av_body_shadow_ratio_cent-1]) and
 			(float(this_prev_av_body_shadow_ratio) <= body_shadow_ratios_cents[this_prev_av_body_shadow_ratio_cent])):
 				trade_data[int(i)] = 1
-	return trade_data
+	return [trade_data, combined_cents]
 
 def combine_profits(first_trade_array, second_trade_array, second_n):
 	if len(first_trade_array) == len(second_trade_array):
@@ -193,16 +199,19 @@ haco_length = len(hacoefficient_data)
 # percentile ranges and simulating buying and selling for each of the
 # iterations
 # Japanese data
-n = 10
+n = 1
 trade_data = [None]*jco_length
 profit_data = [None]*jco_length
 max_profit_data = [None]*len(profit_data)
 max_sell_after = [None]*len(profit_data)
+all_cents = []
+all_profitable_cents = []
 for jiter in range(jco_length):
 	this_cents = ([jbody_sizes_cents, jshadow_sizes_cents,
 		jbody_shadow_ratios_cents, jrun_lengths_cents, jrun_diffs_cents])
-	trade_data[jiter] = gettradedata(this_cents, jcoefficient_data, jdata, jreversals,
+	[trade_data[jiter], combined_cents] = gettradedata(this_cents, jcoefficient_data, jdata, jreversals,
 		jiter)
+	all_cents.append(combined_cents)
 	this_set = [None]*n
 	for i in range(n):
 		this_set[i] = tradesim_n.sim_trade(jdata, trade_data[jiter], i+1)
@@ -219,13 +228,23 @@ for i in range(len(trade_data)):
 		trial_combined_trade_array = combine_profits(combined_trade_array, trade_data[i], max_sell_after[i])
 		trial_profit = tradesim.sim_trade(jdata, trial_combined_trade_array)
 		if trial_profit > this_profit:
+			all_cents[i].append(trial_profit-this_profit)
+			all_cents[i].append(trial_profit)
+			all_cents[i].append(jcoefficient_data[i][0])
+			all_profitable_cents.append(all_cents[i])
 			this_profit = trial_profit
 			combined_trade_array = trial_combined_trade_array
 percent_profit = (this_profit - 1)*100
 print('Japanese candles: ' + str(percent_profit) + '%')
+# Save combined_trade_array to csv file
+combined_filepath = '../data/jprofits.csv'
+with open(combined_filepath, 'wb') as jprofit_file:
+    j_writer = csv.writer(jprofit_file, delimiter=',')
+    for profit_row in all_profitable_cents:
+        j_writer.writerow(profit_row)
 
 # Heikin Ashi data
-n = 20
+n = 1
 trade_data = [None]*haco_length
 profit_data = [None]*haco_length
 max_profit_data = [None]*len(profit_data)
@@ -233,7 +252,7 @@ max_sell_after = [None]*len(profit_data)
 for haiter in range(haco_length):
 	this_cents = ([habody_sizes_cents, hashadow_sizes_cents,
 		habody_shadow_ratios_cents, harun_lengths_cents, harun_diffs_cents])
-	trade_data[haiter] = gettradedata(this_cents, hacoefficient_data, hadata, hareversals,
+	[trade_data[haiter], combined_cents] = gettradedata(this_cents, hacoefficient_data, hadata, hareversals,
 		haiter)
 	this_set = [None]*n
 	for i in range(n):
