@@ -1,5 +1,5 @@
 import sys
-sys.path.append('./tools')
+sys.path.append('../tools')
 
 import getanalysis
 import tradesim
@@ -7,7 +7,7 @@ import csv
 import time
 import numpy
 
-data_filepath = '../data/jcandles.csv'
+data_filepath = '../../data/jcandles.csv'
 
 data = getanalysis.import_j_candles(data_filepath)
 

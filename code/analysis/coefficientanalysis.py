@@ -1,5 +1,5 @@
 import sys
-sys.path.append('./tools')
+sys.path.append('../tools')
 
 import getanalysis
 import tradesim
@@ -8,8 +8,8 @@ import time
 import numpy
 import pylab
 
-jdata_filepath = '../data/jcandles.csv'
-hadata_filepath = '../data/hacandles.csv'
+jdata_filepath = '../../data/jcandles.csv'
+hadata_filepath = '../../data/hacandles.csv'
 jdata = getanalysis.import_j_candles(jdata_filepath)
 hadata = getanalysis.import_j_candles(hadata_filepath)
 
@@ -112,7 +112,7 @@ with open('../data/analysis/coefficientanalysis.csv', 'wb') as file:
 '''
 
 # Save Heikin Ashi candle coefficient data to csv
-with open('../data/analysis/hacoefficientanalysis.csv', 'wb') as file:
+with open('../../data/analysis/hacoefficientanalysis.csv', 'wb') as file:
     writer = csv.writer(file, delimiter=',')
     for data_line in hacoefficient_data:
         writer.writerow(data_line)
@@ -141,7 +141,7 @@ for i in range(len(graph_titles)):
 '''
 
 # Save all Heikin Ashi candle graphs
-filepath = '../data/analysis/hagraphs/'
+filepath = '../../data/analysis/hagraphs/'
 graph_titles = (['body_sizes', 'shadow_sizes', 'body_to_shadow_ratio', 'prev_body_size', 'prev_shadow_size',
                 'prev_body_shadow_ratio', 'prev_run_length', 'prev_run_diff', 'prev_av_body_size',
                 'prev_av_shadow_size', 'prev_av_body_shadow_ratio'])
